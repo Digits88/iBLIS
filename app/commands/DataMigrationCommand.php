@@ -25,11 +25,10 @@ class DataMigrationCommand extends Command {
      */
     public function fire()
     {
-        $id = User::all();
-		foreach ($id as $value) {
-        	$password = Hash::make('password');
-			$query = 'UPDATE users SET password=\''.$password.'\' WHERE id='.$value->id.';';
-			DB::select(DB::raw($query));
+        $users = User::all();
+		foreach ($users as $user) {
+        	$user->password = Hash::make('password');
+			$user->save();
 		}
     }
 }
